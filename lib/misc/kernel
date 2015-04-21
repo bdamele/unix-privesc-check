@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Revision$
+# $Revision: 324 $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -151,6 +151,38 @@ kernel_selinux_enforce () {
 	else
 		printf -- "0\n"
 	fi
+}
+
+kernel_grsecurity() {
+	false
+}
+
+kernel_pax() {
+	false
+}
+
+kernel_heap_hardening() {
+	false
+}
+
+kernel_gcc_stack_protector() {
+	false
+}
+
+kernel_strict_user_copy_checks() {
+	false
+}
+
+kernel_read_only_kernel_data() {
+	false
+}
+
+kernel_restricted_dev_mem() {
+	false
+}
+
+kernel_restricted_dev_kmem() {
+	false
 }
 
 kernel_release() {
