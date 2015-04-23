@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Revision$
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,20 +14,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
-# (c) Tim Brown, 2012
-# <mailto:timb@nth-dimension.org.uk>
-# <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
+# (c) pentestmonkey, Bernardo Damele A. G., Tim Brown, 2012-2015
+# (c) pentestmonkey, 2007-2011
 
 . lib/misc/stdio
 
 header () {
-	VERSION="2.1"
-	SVNVERSION="$Revision$" # Don't change this line.  Auto-updated.
-	SVNVNUM="`echo $SVNVERSION | sed \"s/[^0-9]//g\"`"
-	if [ -n "${SVNVNUM}" ]; then
-		VERSION="${VERSION}-svn-${SVNVNUM}"
-	fi
-	printf "unix-privesc-check v${VERSION} ( http://code.google.com/p/unix-privesc-check )\n\n"
+	VERSION="2.1-dev"
+	printf "unix-privesc-check v${VERSION} (https://github.com/inquisb/unix-privesc-check)\n\n"
 }
 
 version () {
@@ -40,7 +33,7 @@ version () {
 }
 
 preamble () {
-	printf "Shell script to check for simple privilege escalation vectors on UNIX systems.\n\n"
+	printf "Shell script to build review and check for privilege escalation vectors on UNIX systems.\n\n"
 }
 
 usage () {
