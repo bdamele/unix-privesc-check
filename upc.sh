@@ -46,12 +46,12 @@ usage () {
 	printf "\t--color\tenable output coloring\n"
 	printf "\t--verbose\tverbose level (0-2, default: 1)\n"
 	printf "\t--type\tselect from one of the following check types:\n"
-	for checktype in lib/checks/enabled/*
+	for checktype in checks/enabled/*
 	do
 		printf "\t\t`basename ${checktype}`\n"
 	done
 	printf "\t--checks\tprovide a comma separated list of checks to run, select from the following checks:\n"
-	for check in lib/checks/*
+	for check in checks/*
 	do
 		if [ "`basename \"${check}\"`" != "enabled" ]
 		then
@@ -103,22 +103,22 @@ if [ -n "${CHECKS}" ]
 then
 	for checkfilename in `printf "${CHECKS}" | tr -d " " | tr "," " "`
 	do
-		if [ ! -e "lib/checks/${checkfilename}" ]
+		if [ ! -e "checks/${checkfilename}" ]
 		then
 			stdio_message_error "upc" "the provided check name '${checkfilename}' does not exist"
 		else
-			. "lib/checks/${checkfilename}"
+			. "checks/${checkfilename}"
 			`basename "${checkfilename}"`_init
 			`basename "${checkfilename}"`_main
 			`basename "${checkfilename}"`_fini
 		fi
 	done
 else
-	if [ ! -d "lib/checks/enabled/${TYPE}" ]
+	if [ ! -d "checks/enabled/${TYPE}" ]
 	then
 		stdio_message_error "upc" "the provided check type '${TYPE}' does not exist"
 	else
-		for checkfilename in lib/checks/enabled/${TYPE}/*
+		for checkfilename in checks/enabled/${TYPE}/*
 		do
 			. "${checkfilename}"
 			`basename "${checkfilename}"`_init
