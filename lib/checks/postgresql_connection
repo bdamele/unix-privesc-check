@@ -22,9 +22,9 @@
 # Verify PostgreSQL trust relationships by connecting to localhost with
 # common usernames and no password
 
-. lib/misc/file
-. lib/misc/postgresql
-. lib/misc/stdio
+. lib/file
+. lib/postgresql
+. lib/stdio
 
 postgresql_connection_init () {
 	stdio_message_log "postgresql_connection" "Starting at: `date`"

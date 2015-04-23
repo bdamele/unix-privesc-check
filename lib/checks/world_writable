@@ -21,9 +21,9 @@
 #
 # List world-writable files
 
-. lib/misc/stdio
-. lib/misc/file
-. lib/misc/permission
+. lib/stdio
+. lib/file
+. lib/permission
 
 world_writable_init () {
 	stdio_message_log "world_writable" "Starting at: `date`"

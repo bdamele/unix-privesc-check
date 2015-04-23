@@ -26,7 +26,7 @@ then
 
 ldapincluded=1
 
-. lib/misc/file
+. lib/file
 
 ldap_authentication_in_use () {
 	# ldap_nis    Uses LDAP NIS services for resolving names

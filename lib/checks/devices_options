@@ -21,9 +21,9 @@
 #
 # Check for weak options on devices files
 
-. lib/misc/device
-. lib/misc/file
-. lib/misc/stdio
+. lib/device
+. lib/file
+. lib/stdio
 
 devices_options_init () {
 	stdio_message_log "devices_options" "Starting at: `date`"

@@ -19,40 +19,25 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# Supports: Linux, Solaris
 
-if [ -z "${inittabincluded}" ]
+if [ -z "${dependenciesincluded}" ]
 then
 
-inittabincluded=1
+dependenciesincluded=1
 
-. lib/misc/file
+. lib/stdio
 
-inittab_check () {
-	if [ "`file_is_readable \"/etc/inittab\"`" -eq 1 ]
-	then
-		printf -- "1\n"
-	else
-		printf -- "0\n"
-	fi
+dependencies_check () {
+	# TODO the principle is solid, but at the moment it only caters for Linux
+	#if [ -z "`which objdump`" -o -z "`which strings`" ]
+	#then
+	#	stdio_message_error "dependencies" "missing mandatory tool (objdump or strings), install binutils and rerun"
+	#	#exit 127
+	#fi
+	false
 }
 
-inittab_list () {
-	if [ "`inittab_check`" -eq 1 ]
-	then
-		oldifs="${IFS}"
-		IFS=":"
-		egrep -v "^#|^$" "/etc/inittab" | while read _ _ _ filename _
-		do
-			IFS="${oldifs}"
-			if [ "`file_is_regular \"${filename}\"`" -eq 1 ]
-			then
-				printf -- "root ${filename}\n"
-			fi
-			IFS=":"
-		done
-		IFS="${oldifs}"
-	fi
-}
+dependencies_check
 
 fi

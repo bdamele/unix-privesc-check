@@ -21,9 +21,9 @@
 #
 # List group-writable files
 
-. lib/misc/file
-. lib/misc/group
-. lib/misc/stdio
+. lib/file
+. lib/group
+. lib/stdio
 
 group_writable_init () {
 	stdio_message_log "group_writable" "Starting at: `date`"

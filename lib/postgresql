@@ -26,7 +26,7 @@ then
 
 postgresqlincluded=1
 
-. lib/misc/validate
+. lib/validate
 
 postgresql_query () {
 	host="${1}"

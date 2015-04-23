@@ -21,8 +21,8 @@
 #
 # Check if mmap allows map to 0
 
-. lib/misc/kernel
-. lib/misc/stdio
+. lib/kernel
+. lib/stdio
 
 system_mmap_init () {
 	stdio_message_log "system_mmap" "Starting at: `date`"

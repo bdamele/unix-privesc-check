@@ -26,10 +26,10 @@ then
 
 initincluded=1
 
-. lib/misc/file
-. lib/misc/parse
-. lib/misc/user
-. lib/misc/validate
+. lib/file
+. lib/parse
+. lib/user
+. lib/validate
 
 init_list () {
 	file_show_perms " /etc/init.d/" | while read filename permissions userid groupid

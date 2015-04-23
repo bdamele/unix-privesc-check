@@ -22,9 +22,9 @@
 # Check if textual privileged files (like bash scripts) use environment
 # variables
 
-. lib/misc/stdio
-. lib/misc/privileged
-. lib/misc/binary
+. lib/stdio
+. lib/privileged
+. lib/binary
 
 privileged_environment_variables_init () {
 	stdio_message_log "privileged_environment_variables" "Starting at: `date`"

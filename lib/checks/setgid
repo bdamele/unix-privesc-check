@@ -21,8 +21,8 @@
 #
 # List setgid files
 
-. lib/misc/stdio
-. lib/misc/file
+. lib/stdio
+. lib/file
 
 setgid_init () {
 	stdio_message_log "setgid" "Starting: `date`"

@@ -28,8 +28,8 @@ fileincluded=1
 filecachefilename="files_cache.$$"
 filecacherootpath="/"
 
-. lib/misc/stdio
-. lib/misc/validate
+. lib/stdio
+. lib/validate
 
 file_check_or_generate_cache () {
 	if [ ! -f "${filecachefilename}" ]

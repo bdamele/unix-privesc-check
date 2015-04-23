@@ -17,7 +17,7 @@
 # (c) pentestmonkey, Bernardo Damele A. G., Tim Brown, 2012-2015
 # (c) pentestmonkey, 2007-2011
 
-. lib/misc/stdio
+. lib/stdio
 
 header () {
 	VERSION="2.1-dev"
@@ -61,7 +61,7 @@ usage () {
 	exit 1
 }
 
-# TODO make it use lib/misc/validate
+# TODO make it use lib/validate
 CHECKS=""
 TYPE="all"
 COLORING="0"

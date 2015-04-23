@@ -21,32 +21,38 @@
 #
 # Supports: Linux
 
-if [ -z "${ssh_keyincluded}" ]
+if [ -z "${inittabincluded}" ]
 then
 
-ssh_keyincluded=1
+inittabincluded=1
 
-. lib/misc/validate
+. lib/file
 
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
-	do
-		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
-				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
-				else
-					stdio_message_log "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
-				fi
-				;;
-		esac
-	done
+inittab_check () {
+	if [ "`file_is_readable \"/etc/inittab\"`" -eq 1 ]
+	then
+		printf -- "1\n"
+	else
+		printf -- "0\n"
+	fi
+}
 
+inittab_list () {
+	if [ "`inittab_check`" -eq 1 ]
+	then
+		oldifs="${IFS}"
+		IFS=":"
+		egrep -v "^#|^$" "/etc/inittab" | while read _ _ _ filename _
+		do
+			IFS="${oldifs}"
+			if [ "`file_is_regular \"${filename}\"`" -eq 1 ]
+			then
+				printf -- "root ${filename}\n"
+			fi
+			IFS=":"
+		done
+		IFS="${oldifs}"
+	fi
 }
 
 fi

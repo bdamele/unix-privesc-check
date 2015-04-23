@@ -22,9 +22,9 @@
 # Check if privileged files call banned (and potentially dangerous) functions
 # Based on Microsoft's banned API list as parsed by ../../tools/generate_banned.sh
 
-. lib/misc/stdio
-. lib/misc/privileged
-. lib/misc/binary
+. lib/stdio
+. lib/privileged
+. lib/binary
 
 privileged_banned_init () {
 	stdio_message_log "privileged_banned" "Starting at: `date`"

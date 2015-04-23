@@ -21,9 +21,9 @@
 #
 # Check for NX (NoExecute) support
 
-. lib/misc/stdio
-. lib/misc/privileged
-. lib/misc/binary
+. lib/stdio
+. lib/privileged
+. lib/binary
 
 privileged_nx_init () {
 	stdio_message_log "privileged_nx" "Starting at: `date`"

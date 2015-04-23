@@ -22,9 +22,9 @@
 # Check if privileged files drop their privileges
 # Based on ideas found at http://people.redhat.com/sgrubb/security/
 
-. lib/misc/stdio
-. lib/misc/privileged
-. lib/misc/binary
+. lib/stdio
+. lib/privileged
+. lib/binary
 
 privileged_change_privileges_init () {
 	stdio_message_log "privileged_change_privileges" "Starting at: `date`"

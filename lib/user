@@ -26,8 +26,8 @@ then
 
 userincluded=1
 
-. lib/misc/passwd
-. lib/misc/validate
+. lib/passwd
+. lib/validate
 
 user_is_trusted () {
 	username="${1}"

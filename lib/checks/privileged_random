@@ -21,9 +21,9 @@
 #
 # Check if privileged files call random functions
 
-. lib/misc/stdio
-. lib/misc/privileged
-. lib/misc/binary
+. lib/stdio
+. lib/privileged
+. lib/binary
 
 privileged_random_init () {
 	stdio_message_log "privileged_random" "Starting at: `date`"

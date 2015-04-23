@@ -21,8 +21,8 @@
 #
 # Check if SELinux enforces system-wide
 
-. lib/misc/kernel
-. lib/misc/stdio
+. lib/kernel
+. lib/stdio
 
 system_selinux_init () {
 	stdio_message_log "system_selinux" "Starting at: `date`"

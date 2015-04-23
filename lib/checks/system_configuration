@@ -21,11 +21,11 @@
 #
 # Check for writable permissions on system configuration files and directories
 
-. lib/misc/file
-. lib/misc/group
-. lib/misc/permission
-. lib/misc/stdio
-. lib/misc/user
+. lib/file
+. lib/group
+. lib/permission
+. lib/stdio
+. lib/user
 
 system_configuration_init () {
 	stdio_message_log "system_configuration" "Starting at: `date`"

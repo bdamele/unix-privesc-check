@@ -26,9 +26,9 @@ then
 
 sudoincluded=1
 
-. lib/misc/file
-. lib/misc/parse
-. lib/misc/validate
+. lib/file
+. lib/parse
+. lib/validate
 
 sudo_is_password_required () {
 	pattern="${1}"

@@ -21,10 +21,10 @@
 #
 # List unencrypted SSH client private keys
 
-. lib/misc/file
-. lib/misc/group
-. lib/misc/ssh_key
-. lib/misc/stdio
+. lib/file
+. lib/group
+. lib/ssh_key
+. lib/stdio
 
 ssh_key_init () {
 	stdio_message_log "ssh_key" "Starting at: `date`"

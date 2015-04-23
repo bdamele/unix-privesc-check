@@ -26,8 +26,8 @@ then
 
 binaryincluded=1
 
-. lib/misc/dependencies
-. lib/misc/validate
+. lib/dependencies
+. lib/validate
 
 binary_list_rpath () {
 	filename="${1}"

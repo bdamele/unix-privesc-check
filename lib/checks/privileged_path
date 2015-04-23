@@ -22,9 +22,9 @@
 # Check if privileged files set PATH variable
 # Based on ideas found at http://people.redhat.com/sgrubb/security/
 
-. lib/misc/stdio
-. lib/misc/privileged
-. lib/misc/binary
+. lib/stdio
+. lib/privileged
+. lib/binary
 
 privileged_path_init () {
 	stdio_message_log "privileged_path" "Starting at: `date`"

@@ -21,12 +21,12 @@
 #
 # Check if the ssh-agent is running and list SSH unencrypted keys
 
-. lib/misc/stdio
-. lib/misc/process
-. lib/misc/ssh_agent
-. lib/misc/file
-. lib/misc/ssh_agent
-. lib/misc/ssh_key
+. lib/stdio
+. lib/process
+. lib/ssh_agent
+. lib/file
+. lib/ssh_agent
+. lib/ssh_key
 
 ssh_agent_init () {
 	stdio_message_log "ssh_agent" "Starting at: `date`"

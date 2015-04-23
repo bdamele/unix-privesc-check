@@ -21,9 +21,9 @@
 #
 # Check for world-readable and world-writable permissions on devices files
 
-. lib/misc/device
-. lib/misc/file
-. lib/misc/stdio
+. lib/device
+. lib/file
+. lib/stdio
 
 devices_permission_init () {
 	stdio_message_log "devices_permission" "Starting at: `date`"

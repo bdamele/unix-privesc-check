@@ -21,9 +21,9 @@
 #
 # Check for RELRO support
 
-. lib/misc/stdio
-. lib/misc/privileged
-. lib/misc/binary
+. lib/stdio
+. lib/privileged
+. lib/binary
 
 privileged_relro_init () {
 	stdio_message_log "privileged_relro" "Starting at: `date`"

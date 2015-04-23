@@ -19,25 +19,37 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux, Solaris
+# Supports: AIX, Solaris, Linux
 
-if [ -z "${dependenciesincluded}" ]
+if [ -z "${parseincluded}" ]
 then
 
-dependenciesincluded=1
+parseincluded=1
 
-. lib/misc/stdio
+. lib/file
+. lib/validate
 
-dependencies_check () {
-	# TODO the principle is solid, but at the moment it only caters for Linux
-	#if [ -z "`which objdump`" -o -z "`which strings`" ]
-	#then
-	#	stdio_message_error "dependencies" "missing mandatory tool (objdump or strings), install binutils and rerun"
-	#	#exit 127
-	#fi
-	false
+parse_extract_absolute_filepaths () {
+	pattern="${1}"
+	if [ -z "${pattern}" ]
+	then
+		printf -- ""
+	fi
+	printf -- "${pattern}" | egrep -o "/[a-z|A-Z|0-9|/|-|_|.]*" | while read filepath
+	do
+		printf -- "${filepath}\n"
+	done
 }
 
-dependencies_check
+parse_environ_cwd () {
+	pid="${1}"
+	[ "`validate_is_number \"${pid}\"`" ] || false
+	if [ "`file_is_readable \"/proc/${pid}/environ\"`" -eq 1 ]
+	then
+		# the tail is because /proc/PID/environ contains multiple PWD values, only the last is the current working directory
+		# the cut is to strip the 'PWD=' from the grepped pattern
+		printf -- "`egrep -a -o \"PWD=/[a-z|A-Z|0-9|/|-|_|.]*\" \"/proc/${pid}/environ\" | tail -1 | cut -c5-`\n"
+	fi
+}
 
 fi

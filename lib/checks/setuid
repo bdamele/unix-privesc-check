@@ -21,8 +21,8 @@
 #
 # List setuid files
 
-. lib/misc/stdio
-. lib/misc/file
+. lib/stdio
+. lib/file
 
 setuid_init () {
 	stdio_message_log "setuid" "Starting at: `date`"

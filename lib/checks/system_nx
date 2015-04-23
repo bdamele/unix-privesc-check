@@ -21,8 +21,8 @@
 #
 # Check if the CPU supports NX (NoExecute)
 
-. lib/misc/kernel
-. lib/misc/stdio
+. lib/kernel
+. lib/stdio
 
 system_nx_init () {
 	stdio_message_log "system_nx" "Starting at: `date`"

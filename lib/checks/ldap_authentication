@@ -21,8 +21,8 @@
 #
 # Check if LDAP is used for authentication
 
-. lib/misc/ldap
-. lib/misc/stdio
+. lib/ldap
+. lib/stdio
 
 ldap_authentication_init () {
 	stdio_message_log "ldap_authentication" "Starting at: `date`"

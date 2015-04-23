@@ -26,8 +26,8 @@ then
 
 deviceincluded=1
 
-. lib/misc/file
-. lib/misc/validate
+. lib/file
+. lib/validate
 
 device_fstab_check () {
 	if [ "`file_is_readable \"/etc/fstab\"`" -eq 1 ]

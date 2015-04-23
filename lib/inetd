@@ -27,7 +27,7 @@ then
 inetdincluded=1
 inetdfile="/etc/inetd.conf"
 
-. lib/misc/validate
+. lib/validate
 
 inetd_preventive_check () {
 	[ "`file_exists \"${inetdfile}\"`" ] || false

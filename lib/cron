@@ -26,10 +26,10 @@ then
 
 cronincluded=1
 
-. lib/misc/file
-. lib/misc/parse
-. lib/misc/user
-. lib/misc/validate
+. lib/file
+. lib/parse
+. lib/user
+. lib/validate
 
 cron_crontab_list () {
 	crontab -l | egrep -v "^#|^$" | while read minute hour dom mon dow command arguments

@@ -24,14 +24,14 @@ then
 
 privilegedincluded=1
 
-. lib/misc/cron
-. lib/misc/file
-. lib/misc/inetd
-. lib/misc/init
-. lib/misc/inittab
-. lib/misc/process
-. lib/misc/stdio
-. lib/misc/sudo
+. lib/cron
+. lib/file
+. lib/inetd
+. lib/init
+. lib/inittab
+. lib/process
+. lib/stdio
+. lib/sudo
 
 privilegedcachefilename="privileged_cache.$$"
 

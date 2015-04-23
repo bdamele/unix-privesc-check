@@ -21,10 +21,10 @@
 #
 # Check permissions of PostgreSQL configuration file pg_hba.conf
 
-. lib/misc/file
-. lib/misc/group
-. lib/misc/stdio
-. lib/misc/user
+. lib/file
+. lib/group
+. lib/stdio
+. lib/user
 
 postgresql_configuration_init () {
 	stdio_message_log "postgresql_configuration" "Starting at: `date`"

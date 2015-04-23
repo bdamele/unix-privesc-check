@@ -26,8 +26,8 @@ then
 
 processincluded=1
 
-. lib/misc/parse
-. lib/misc/validate
+. lib/parse
+. lib/validate
 
 process_list () {
 	pattern="${1}"

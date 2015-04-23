@@ -21,8 +21,8 @@
 #
 # Check if the system supports ASLR (Address Space Layout Randomization)
 
-. lib/misc/kernel
-. lib/misc/stdio
+. lib/kernel
+. lib/stdio
 
 system_aslr_init () {
 	stdio_message_log "system_aslr" "Starting at: `date`"

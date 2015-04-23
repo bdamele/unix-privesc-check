@@ -21,8 +21,8 @@
 #
 # List users with no password set
 
-. lib/misc/shadow
-. lib/misc/stdio
+. lib/shadow
+. lib/stdio
 
 shadow_hashes_init () {
 	stdio_message_log "shadow_hashes" "Starting at: `date`"

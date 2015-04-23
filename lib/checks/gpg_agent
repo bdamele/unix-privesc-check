@@ -21,8 +21,8 @@
 #
 # Check if the gpg-agent is running
 
-. lib/misc/stdio
-. lib/misc/process
+. lib/stdio
+. lib/process
 
 gpg_agent_init () {
 	stdio_message_log "gpg_agent" "Starting at: `date`"

@@ -26,9 +26,9 @@ then
 
 kernelincluded=1
 
-. lib/misc/dependencies
-. lib/misc/file
-. lib/misc/validate
+. lib/dependencies
+. lib/file
+. lib/validate
 
 kernel_aslr_pax() {
 	if [ -n "`cat /proc/1/status | grep \"PaX:\" | grep \"R\"`" ]

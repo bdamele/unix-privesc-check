@@ -21,11 +21,11 @@
 #
 # Check for writable permission on home directories
 
-. lib/misc/file
-. lib/misc/group
-. lib/misc/passwd
-. lib/misc/permission
-. lib/misc/stdio
+. lib/file
+. lib/group
+. lib/passwd
+. lib/permission
+. lib/stdio
 
 homedirs_writable_init () {
 	stdio_message_log "homedirs_writable" "Starting at: `date`"

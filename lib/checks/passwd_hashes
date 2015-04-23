@@ -21,8 +21,8 @@
 #
 # List users with no password set or password in /etc/passwd
 
-. lib/misc/stdio
-. lib/misc/passwd
+. lib/stdio
+. lib/passwd
 
 passwd_hashes_init () {
 	stdio_message_log "passwd_hashes" "Starting at: `date`"

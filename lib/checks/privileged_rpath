@@ -23,13 +23,13 @@
 # directories too) and processes that trust other filepaths (with RPATH
 # variable)
 
-. lib/misc/binary
-. lib/misc/file
-. lib/misc/group
-. lib/misc/permission
-. lib/misc/privileged
-. lib/misc/stdio
-. lib/misc/user
+. lib/binary
+. lib/file
+. lib/group
+. lib/permission
+. lib/privileged
+. lib/stdio
+. lib/user
 
 privileged_rpath_init () {
 	stdio_message_log "privileged_rpath" "Starting at: `date`"

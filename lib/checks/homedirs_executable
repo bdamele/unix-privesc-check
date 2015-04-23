@@ -21,11 +21,11 @@
 #
 # Check for readable and executable permissions on home directories
 
-. lib/misc/file
-. lib/misc/group
-. lib/misc/passwd
-. lib/misc/permission
-. lib/misc/stdio
+. lib/file
+. lib/group
+. lib/passwd
+. lib/permission
+. lib/stdio
 
 homedirs_executable_init () {
 	stdio_message_log "homedirs_executable" "Starting at: `date`"

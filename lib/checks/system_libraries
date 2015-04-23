@@ -22,12 +22,12 @@
 # List group-writable and world-writable system libraries and their
 # parent directories
 
-. lib/misc/file
-. lib/misc/group
-. lib/misc/linker
-. lib/misc/permission
-. lib/misc/stdio
-. lib/misc/user
+. lib/file
+. lib/group
+. lib/linker
+. lib/permission
+. lib/stdio
+. lib/user
 
 system_libraries_init () {
 	stdio_message_log "system_libraries" "Starting at: `date`"

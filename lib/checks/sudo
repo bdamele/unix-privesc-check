@@ -21,8 +21,8 @@
 #
 # 
 
-. lib/misc/stdio
-. lib/misc/sudo
+. lib/stdio
+. lib/sudo
 
 sudo_init () {
 	stdio_message_log "sudo" "Starting at: `date`"
