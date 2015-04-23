@@ -23,40 +23,20 @@
 
 . lib/misc/file
 . lib/misc/group
+. lib/misc/ssh_key
 . lib/misc/stdio
 
 ssh_key_init () {
 	stdio_message_log "ssh_key" "Starting at: `date`"
 }
 
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
-	do
-		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
-				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
-				else
-					stdio_message_log "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
-				fi
-				;;
-		esac
-	done
-
-}
-
 ssh_key_main () {
 	# TODO we should expand this list
-	# * parse the local SSH server configuration file /etc/ssh/ssh_config 
+	# * parse the local SSH server configuration file /etc/ssh/ssh_config
 	#   and add to the pattern the value of IdentityFile option
 	# * list files in home directories' .ssh/ and add to pattern list the
 	#   ones with and without .pub extension
-	for pattern in "*id_dsa*" "*id_rsa*"
+	for pattern in "*id_dsa" "*id_rsa"
 	do
 		file_list_by_filename "${pattern}" | while read filename
 		do
