@@ -25,20 +25,27 @@ if [ -z "${inetdincluded}" ]
 then
 
 inetdincluded=1
+inetdfile="/etc/inetd.conf"
 
 . lib/misc/validate
 
+inetd_preventive_check () {
+	[ "`file_exists \"${inetdfile}\"`" ] || false
+}
+
 inetd_list () {
-	egrep -v "^#|^$" "/etc/inetd.conf" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
+	inetd_preventive_check
+	egrep -v "^#|^$" "${inetdfile}" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
 	do
 		printf -- "${portnumber}-${protocol}\n";
 	done
 }
 
 inetd_show_command () {
+	inetd_preventive_check
 	pattern="${1}"
 	[ "`validate_is_string \"${pattern}\"`" ] || false
-	egrep -v "^#|^$" "/etc/inetd.conf" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
+	egrep -v "^#|^$" "${inetdfile}" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
 	do
 		if [ "${portnumber}-${protocol}" = "${pattern}" ]
 		then
@@ -48,9 +55,10 @@ inetd_show_command () {
 }
 
 inetd_show_userid () {
+	inetd_preventive_check
 	pattern="${1}"
 	[ "`validate_is_string \"${pattern}\"`" ] || false
-	egrep -v "^#|^$" "/etc/inetd.conf" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
+	egrep -v "^#|^$" "${inetdfile}" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
 	do
 		if [ "${portnumber}-${protocol}" = "${pattern}" ]
 		then
@@ -60,9 +68,10 @@ inetd_show_userid () {
 }
 
 inetd_show_arguments () {
+	inetd_preventive_check
 	pattern="${1}"
 	[ "`validate_is_string \"${pattern}\"`" ] || false
-	egrep -v "^#|^$" "/etc/inetd.conf" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
+	egrep -v "^#|^$" "${inetdfile}" | while read portnumber sockettype protocol flags userid command arguments argumentsarguments
 	do
 		if [ "${portnumber}-${protocol}" = "${pattern}" ]
 		then
