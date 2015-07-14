@@ -19,34 +19,22 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# Check if the gpg-agent is running
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/stdio
+. lib/process
 
-ssh_keyincluded=1
-
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
-	do
-		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
-				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
-				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
-				fi
-				;;
-		esac
-	done
-
+gpg_agent_init () {
+	stdio_message_info "gpg_agent" "Starting at: `date`"
 }
 
-fi
+gpg_agent_main () {
+	process_list "gpg-agent" | while read processid 
+	do
+		stdio_message_warn "gpg_agent" "gpg-agent is running as `process_show_userid ${processid}` (`process_show_command ${processid}`)"
+	done
+}
+
+gpg_agent_fini () {
+	stdio_message_info "gpg_agent" "Ending at: `date`"
+}

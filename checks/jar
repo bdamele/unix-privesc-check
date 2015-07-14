@@ -19,34 +19,44 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# List all jar files
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/file
+. lib/group
+. lib/stdio
+. lib/user
 
-ssh_keyincluded=1
+jar_init () {
+	stdio_message_info "jar" "Starting at: `date`"
+}
 
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
+jar_main () {
+	file_show_non_symlink_perms " *\.jar$" | while read filename permissions userid groupid
 	do
 		case "${permissions}" in
 			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
+				stdio_message_warn "jar" "${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
 				;;
 			????r?????)
 				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
 				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
+					stdio_message_warn "jar" "${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
 				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
+					stdio_message_info "jar" "${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
+				fi
+				;;
+			?r????????)
+				if [ "`user_is_user_name \"${userid}\"`" -eq 1 ]
+				then
+					stdio_message_info "jar" "${filename} is owned by user ${userid} (YOU) (group ${groupid}) (${permissions})"
+				else
+					stdio_message_debug "jar" "${filename} is owned by user ${userid} (group ${groupid}) (${permissions})"
 				fi
 				;;
 		esac
 	done
-
 }
 
-fi
+jar_fini () {
+	stdio_message_info "jar" "Ending at: `date`"
+}

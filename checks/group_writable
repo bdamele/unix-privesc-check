@@ -19,34 +19,32 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# List group-writable files
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/file
+. lib/group
+. lib/stdio
 
-ssh_keyincluded=1
+group_writable_init () {
+	stdio_message_info "group_writable" "Starting at: `date`"
+}
 
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
+group_writable_main () {
+	file_show_non_symlink_perms "^.....w.... " | while read filename permissions userid groupid
 	do
 		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
+			?????w????)
 				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
 				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
+					stdio_message_warn "group_writable" "${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-writable (${permissions})"
 				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
+					stdio_message_info "group_writable" "${filename} is owned by user ${userid} (group ${groupid}) and is group-writable (${permissions})"
 				fi
 				;;
 		esac
 	done
-
 }
 
-fi
+group_writable_fini () {
+	stdio_message_info "group_writable" "Ending: `date`"
+}

@@ -19,34 +19,27 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# Check if privileged files set PATH variable
+# Based on ideas found at http://people.redhat.com/sgrubb/security/
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/stdio
+. lib/privileged
+. lib/binary
 
-ssh_keyincluded=1
-
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
-	do
-		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
-				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
-				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
-				fi
-				;;
-		esac
-	done
-
+privileged_path_init () {
+	stdio_message_info "privileged_path" "Starting at: `date`"
 }
 
-fi
+privileged_path_main () {
+	privileged_list | while read filetype filename usergroupid
+	do
+		if [ "`binary_matches_string \"${filename}\" \"PATH=\"`" -eq 1 ]
+		then
+			stdio_message_warn "privileged_path" "${filetype} ${filename} (${usergroupid}) sets PATH environment variable, verify that it does not set it unsafely"
+		fi
+	done
+}
+
+privileged_path_fini () {
+	stdio_message_info "privileged_path" "Ending at: `date`"
+}

@@ -19,34 +19,32 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# Check if the system supports ASLR (Address Space Layout Randomization)
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/kernel
+. lib/stdio
 
-ssh_keyincluded=1
-
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
-	do
-		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
-				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
-				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
-				fi
-				;;
-		esac
-	done
-
+system_aslr_init () {
+	stdio_message_info "system_aslr" "Starting at: `date`"
 }
 
-fi
+system_aslr_main () {
+	if [ "`kernel_aslr`" -eq 0 ]
+	then
+		if [ "`kernel_aslr_pax`" -eq 0 ]
+		then
+			stdio_message_warn "system_aslr" "ASLR is not supported system-wide"
+		else
+			stdio_message_debug "system_aslr" "PAX ASLR is supported system-wide"
+		fi
+	elif [ "`kernel_aslr`" -eq 1 ]
+	then
+		stdio_message_info "system_aslr" "Conservative ASLR is supported system-wide (heap addresses are not randomized)"
+	else
+		stdio_message_debug "system_aslr" "ASLR is supported system-wide"
+	fi
+}
+
+system_aslr_fini () {
+	stdio_message_info "system_aslr" "Ending at: `date`"
+}

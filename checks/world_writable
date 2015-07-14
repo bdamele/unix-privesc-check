@@ -19,34 +19,32 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# List world-writable files
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/stdio
+. lib/file
+. lib/permission
 
-ssh_keyincluded=1
+world_writable_init () {
+	stdio_message_info "world_writable" "Starting at: `date`"
+}
 
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
+world_writable_main () {
+	file_show_non_symlink_perms "^........w. " | while read filename permissions userid groupid
 	do
 		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
+			????????w?)
+				if [ "`permission_is_world_writable_sticky_bit \"${permissions}\"`" -eq 1 ]
 				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
+					stdio_message_warn "world_writable" "${filename} is owned by user ${userid} (group ${groupid}) and is world-writable with sticky bit (${permissions})"
 				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
+					stdio_message_warn "world_writable" "${filename} is owned by user ${userid} (group ${groupid}) and is world-writable (${permissions})"
 				fi
 				;;
 		esac
 	done
-
 }
 
-fi
+world_writable_fini () {
+	stdio_message_info "world_writable" "Ending at: `date`"
+}

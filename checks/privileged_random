@@ -19,34 +19,26 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# Check if privileged files call random functions
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/stdio
+. lib/privileged
+. lib/binary
 
-ssh_keyincluded=1
-
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
-	do
-		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
-				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
-				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
-				fi
-				;;
-		esac
-	done
-
+privileged_random_init () {
+	stdio_message_info "privileged_random" "Starting at: `date`"
 }
 
-fi
+privileged_random_main () {
+	privileged_list | while read filetype filename usergroupid
+	do
+		if [ "`binary_matches_function "${filename}" "random|srand"`" -eq 1 ]
+		then
+			stdio_message_warn "privileged_random" "${filetype} ${filename} (${usergroupid}) and uses random()/srand()"
+		fi
+	done
+}
+
+privileged_random_fini () {
+	stdio_message_info "privileged_random" "Ending at: `date`"
+}

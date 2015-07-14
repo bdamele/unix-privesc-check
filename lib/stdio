@@ -28,7 +28,24 @@ stdioincluded=1
 
 . lib/validate
 
-stdio_message_log () {
+stdio_format_message () {
+	color="${1}"
+	type="${2}"
+	check="${3}"
+	message="${4}"
+	[ "`validate_is_string \"${type}\"`" ] || false
+	[ "`validate_is_string \"${check}\"`" ] || false
+	[ "`validate_is_string \"${message}\"`" ] || false
+	[ "`validate_is_number \"${color}\"`" ] || false
+	if [ "${COLORING}" -eq 1 ]
+	then
+		printf "\033[${color}m${type}: [${check}] ${message}\033[m\n"
+	else
+		printf "${type}: [${check}] ${message}\n"
+	fi
+}
+
+stdio_message_info () {
 	check="${1}"
 	message="${2}"
 	[ "`validate_is_string \"${check}\"`" ] || false
@@ -37,6 +54,38 @@ stdio_message_log () {
 	then
 		stdio_format_message "32" "I" "${check}" "${message}"
 	fi
+}
+
+stdio_message_low () {
+	check="${1}"
+	message="${2}"
+	[ "`validate_is_string \"${check}\"`" ] || false
+	[ "`validate_is_string \"${message}\"`" ] || false
+	stdio_format_message "34" "L" "${check}" "${message}"
+}
+
+stdio_message_medium () {
+	check="${1}"
+	message="${2}"
+	[ "`validate_is_string \"${check}\"`" ] || false
+	[ "`validate_is_string \"${message}\"`" ] || false
+	stdio_format_message "33" "M" "${check}" "${message}"
+}
+
+stdio_message_high () {
+	check="${1}"
+	message="${2}"
+	[ "`validate_is_string \"${check}\"`" ] || false
+	[ "`validate_is_string \"${message}\"`" ] || false
+	stdio_format_message "31" "H" "${check}" "${message}"
+}
+
+stdio_message_critical () {
+	check="${1}"
+	message="${2}"
+	[ "`validate_is_string \"${check}\"`" ] || false
+	[ "`validate_is_string \"${message}\"`" ] || false
+	stdio_format_message "35" "C" "${check}" "${message}"
 }
 
 stdio_message_warn () {
@@ -54,7 +103,7 @@ stdio_message_debug () {
 	[ "`validate_is_string \"${message}\"`" ] || false
 	if [ "${VERBOSE}" -ge 2 ]
 	then
-		stdio_format_message "35" "D" "${check}" "${message}" >&2
+		stdio_format_message "30" "D" "${check}" "${message}" >&2
 	fi
 }
 
@@ -63,24 +112,7 @@ stdio_message_error () {
 	message="${2}"
 	[ "`validate_is_string \"${check}\"`" ] || false
 	[ "`validate_is_string \"${message}\"`" ] || false
-	stdio_format_message "31" "E" "${check}" "${message}" >&2
-}
-
-stdio_format_message () {
-	color="${1}"
-	type="${2}"
-	check="${3}"
-	message="${4}"
-	[ "`validate_is_string \"${type}\"`" ] || false
-	[ "`validate_is_string \"${check}\"`" ] || false
-	[ "`validate_is_string \"${message}\"`" ] || false
-	[ "`validate_is_number \"${color}\"`" ] || false
-	if [ "${COLORING}" -eq 1 ]
-	then
-		printf "\033[${color}m${type}: [${check}] ${message}\033[m\n"
-	else
-		printf "${type}: [${check}] ${message}\n"
-	fi
+	stdio_format_message "30" "E" "${check}" "${message}" >&2
 }
 
 fi

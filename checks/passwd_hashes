@@ -19,34 +19,36 @@
 # <mailto:timb@nth-dimension.org.uk>
 # <http://www.nth-dimension.org.uk/> / <http://www.machine.org.uk/>
 #
-# Supports: Linux
+# List users with no password set or password in /etc/passwd
 
-if [ -z "${ssh_keyincluded}" ]
-then
+. lib/stdio
+. lib/passwd
 
-ssh_keyincluded=1
-
-. lib/validate
-
-ssh_key_permissions () {
-	filename="${1}"
-	file_show_non_symlink_perms " ${filename}$" | while read filename permissions userid groupid
-	do
-		case "${permissions}" in
-			???????r??)
-				stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is world-readable (${permissions})"
-				;;
-			????r?????)
-				if [ "`group_is_in_group_name \"${groupid}\"`" -eq 1 ]
-				then
-					stdio_message_warn "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}: YOU) and is group-readable (${permissions})"
-				else
-					stdio_message_info "ssh_key" "key ${filename} is owned by user ${userid} (group ${groupid}) and is group-readable (${permissions})"
-				fi
-				;;
-		esac
-	done
-
+passwd_hashes_init () {
+	stdio_message_info "passwd_hashes" "Starting at: `date`"
 }
 
-fi
+passwd_hashes_main () {
+	passwd_list | while read username
+	do
+		if [ "${username}" = "+" ]
+		then
+			stdio_message_warn "passwd_hashes" "/etc/passwd allows external authentication"
+		else
+			hash="`passwd_show_hash "${username}"`"
+			if [ "${hash}" != "x" -a "${hash}" != "\!" -a "${hash}" != "*" ]
+			then
+				if [ -z "${hash}" ]
+				then
+					stdio_message_warn "passwd_hashes" "${username} has no password set"
+				else
+					stdio_message_warn "passwd_hashes" "/etc/passwd contains password hash for ${username} (${hash})"
+				fi
+			fi
+		fi
+	done
+}
+
+passwd_hashes_fini () {
+	stdio_message_info "passwd_hashes" "Ending at: `date`"
+}
